@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Marvel Universe</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #080808;
+      color: white;
+    }
+
+    /* ================= NAVBAR ================= */
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 8%;
+      background: rgba(0, 0, 0, 0.9);
+      border-bottom: 2px solid #e62429;
+    }
+
+    .logo {
+      background: #e62429;
+      padding: 8px 20px;
+      font-size: 28px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #e62429;
+    }
+
+    /* ================= HERO ================= */
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 100px 20px 40px;
+
+      background:
+        radial-gradient(
+          circle at center,
+          rgba(230, 36, 41, 0.35),
+          rgba(0, 0, 0, 0.9)
+        ),
+        linear-gradient(135deg, #111, #000);
+    }
+
+    .hero-content {
+      max-width: 900px;
+    }
+
+    .hero h1 {
+      font-size: clamp(60px, 12vw, 150px);
+      color: #e62429;
+      letter-spacing: 8px;
+      text-shadow:
+        0 0 10px rgba(230, 36, 41, 0.7),
+        0 0 30px rgba(230, 36, 41, 0.5);
+    }
+
+    .hero h2 {
+      font-size: clamp(25px, 4vw, 45px);
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      max-width: 700px;
+      margin: auto;
+      color: #cccccc;
+      line-height: 1.7;
+      font-size: 18px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 14px 35px;
+      background: #e62429;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: white;
+      color: #e62429;
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(230, 36, 41, 0.5);
+    }
+
+    /* ================= SECTION ================= */
+
+    section {
+      padding: 90px 8%;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 45px;
+      margin-bottom: 50px;
+    }
+
+    .section-title span {
+      color: #e62429;
+    }
+
+    /* ================= CHARACTER CARDS ================= */
+
+    .characters {
+      background: #101010;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 30px;
+    }
+
+    .card {
+      position: relative;
+      height: 400px;
+      overflow: hidden;
+      border-radius: 15px;
+      background:
+        radial-gradient(circle at top, #e62429, #111 65%);
+      border: 1px solid #333;
+      transition: 0.4s;
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-12px) scale(1.02);
+      border-color: #e62429;
+      box-shadow: 0 20px 40px rgba(230, 36, 41, 0.25);
+    }
+
+    .character-art {
+      height: 280px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 120px;
+      filter: drop-shadow(0 10px 10px #000);
+    }
+
+    .card-content {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding: 25px;
+      background:
+        linear-gradient(
+          transparent,
+          rgba(0, 0, 0, 0.95) 35%
+        );
+    }
+
+    .card-content h3 {
+      font-size: 26px;
+      color: white;
+    }
+
+    .card-content p {
+      margin-top: 8px;
+      color: #bbb;
+    }
+
+    /* Individual colors */
+
+    .ironman {
+      background:
+        radial-gradient(circle at top, #ff3b30, #300 55%, #111);
+    }
+
+    .spiderman {
+      background:
+        radial-gradient(circle at top, #e62429, #001b44 55%, #111);
+    }
+
+    .thor {
+      background:
+        radial-gradient(circle at top, #4da6ff, #152238 55%, #111);
+    }
+
+    .hulk {
+      background:
+        radial-gradient(circle at top, #58d68d, #133b20 55%, #111);
+    }
+
+    /* ================= ABOUT ================= */
+
+    .about {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 60px;
+      flex-wrap: wrap;
+      background:
+        linear-gradient(135deg, #050505, #250000);
+    }
+
+    .about-graphic {
+      width: 350px;
+      height: 350px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      background:
+        radial-gradient(circle, #e62429 0%, #500000 50%, #080808 72%);
+
+      box-shadow:
+        0 0 40px rgba(230, 36, 41, 0.5);
+
+      font-size: 120px;
+    }
+
+    .about-text {
+      max-width: 600px;
+    }
+
+    .about-text h2 {
+      font-size: 45px;
+      margin-bottom: 20px;
+    }
+
+    .about-text h2 span {
+      color: #e62429;
+    }
+
+    .about-text p {
+      color: #bbb;
+      line-height: 1.8;
+      margin-bottom: 15px;
+    }
+
+    /* ================= INFINITY SECTION ================= */
+
+    .infinity {
+      text-align: center;
+      background:
+        radial-gradient(circle, #301200, #070707 65%);
+    }
+
+    .stones {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .stone {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 35px;
+      transition: 0.4s;
+    }
+
+    .stone:hover {
+      transform: scale(1.2);
+    }
+
+    .space {
+      background: #3498db;
+      box-shadow: 0 0 30px #3498db;
+    }
+
+    .mind {
+      background: #f1c40f;
+      box-shadow: 0 0 30px #f1c40f;
+    }
+
+    .reality {
+      background: #e74c3c;
+      box-shadow: 0 0 30px #e74c3c;
+    }
+
+    .power {
+      background: #9b59b6;
+      box-shadow: 0 0 30px #9b59b6;
+    }
+
+    .time {
+      background: #2ecc71;
+      box-shadow: 0 0 30px #2ecc71;
+    }
+
+    .soul {
+      background: #e67e22;
+      box-shadow: 0 0 30px #e67e22;
+    }
+
+    /* ================= FOOTER ================= */
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      background: black;
+      border-top: 2px solid #e62429;
+      color: #888;
+    }
+
+    footer span {
+      color: #e62429;
+    }
+
+    /* ================= RESPONSIVE ================= */
+
+    @media (max-width: 700px) {
+
+      nav {
+        padding: 12px 5%;
+      }
+
+      nav ul {
+        display: none;
+      }
+
+      .logo {
+        font-size: 22px;
+      }
+
+      .hero h1 {
+        letter-spacing: 2px;
+      }
+
+      .section-title {
+        font-size: 34px;
+      }
+
+      .about-graphic {
+        width: 260px;
+        height: 260px;
+        font-size: 90px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ================= NAVBAR ================= -->
+
+  <nav>
+
+    <div class="logo">
+      MARVEL
+    </div>
+
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#heroes">Heroes</a></li>
+      <li><a href="#about">Universe</a></li>
+      <li><a href="#stones">Infinity Stones</a></li>
+    </ul>
+
+  </nav>
+
+
+  <!-- ================= HERO ================= -->
+
+  <section class="hero" id="home">
+
+    <div class="hero-content">
+
+      <h1>MARVEL</h1>
+
+      <h2>WELCOME TO THE UNIVERSE</h2>
+
+      <p>
+        Heroes are made by the paths they choose.
+        Explore a universe filled with legendary heroes,
+        powerful villains and incredible adventures.
+      </p>
+
+      <a href="#heroes" class="btn">
+        EXPLORE HEROES
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= HERO CARDS ================= -->
+
+  <section class="characters" id="heroes">
+
+    <h2 class="section-title">
+      Marvel <span>Heroes</span>
+    </h2>
+
+    <div class="cards">
+
+      <!-- Iron Man -->
+
+      <div class="card ironman">
+
+        <div class="character-art">
+          🤖
+        </div>
+
+        <div class="card-content">
+
+          <h3>IRON MAN</h3>
+
+          <p>
+            Genius. Billionaire. Inventor. Avenger.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- Spider-Man -->
+
+      <div class="card spiderman">
+
+        <div class="character-art">
+          🕷️
+        </div>
+
+        <div class="card-content">
+
+          <h3>SPIDER-MAN</h3>
+
+          <p>
+            With great power comes great responsibility.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- Thor -->
+
+      <div class="card thor">
+
+        <div class="character-art">
+          ⚡
+        </div>
+
+        <div class="card-content">
+
+          <h3>THOR</h3>
+
+          <p>
+            The mighty God of Thunder.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- Hulk -->
+
+      <div class="card hulk">
+
+        <div class="character-art">
+          💪
+        </div>
+
+        <div class="card-content">
+
+          <h3>HULK</h3>
+
+          <p>
+            Incredible strength. Unstoppable rage.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= ABOUT ================= -->
+
+  <section class="about" id="about">
+
+    <div class="about-graphic">
+      🛡️
+    </div>
+
+    <div class="about-text">
+
+      <h2>
+        The <span>Avengers</span>
+      </h2>
+
+      <p>
+        Earth's mightiest heroes come together to fight
+        enemies that no single hero could withstand.
+      </p>
+
+      <p>
+        Iron Man, Captain America, Thor, Hulk, Black Widow,
+        Spider-Man and many others protect the universe
+        from extraordinary threats.
+      </p>
+
+      <a href="#stones" class="btn">
+        DISCOVER MORE
+      </a>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= INFINITY STONES ================= -->
+
+  <section class="infinity" id="stones">
+
+    <h2 class="section-title">
+      Infinity <span>Stones</span>
+    </h2>
+
+    <p>
+      Six powerful stones controlling the fundamental
+      aspects of the universe.
+    </p>
+
+    <div class="stones">
+
+      <div class="stone space" title="Space Stone">
+        🔵
+      </div>
+
+      <div class="stone mind" title="Mind Stone">
+        🟡
+      </div>
+
+      <div class="stone reality" title="Reality Stone">
+        🔴
+      </div>
+
+      <div class="stone power" title="Power Stone">
+        🟣
+      </div>
+
+      <div class="stone time" title="Time Stone">
+        🟢
+      </div>
+
+      <div class="stone soul" title="Soul Stone">
+        🟠
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= FOOTER ================= -->
+
+  <footer>
+
+    <p>
+      Marvel Universe Fan Website |
+      Designed with <span>❤</span> using HTML & CSS
+    </p>
+
+  </footer>
+
+</body>
+</html>
